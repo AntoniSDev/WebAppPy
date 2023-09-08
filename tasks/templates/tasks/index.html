@@ -3,22 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>List Doc</title>
+
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+
 </head>
 <body>
-    <h1>List Doc</h1>
+<h1>List Doc</h1>
 
+<div id="collections">
     {% for collection in collections %}
-        <h2>{{ collection.name|safe }}</h2>
+        <h2>{{ collection.name }}</h2>
     {% endfor %}
+</div>
 
-    <form method="POST" action="{% url 'add-collection' %}">
-        {% csrf_token %}
+<form method="POST">
+    {% csrf_token %}
 
-        <input type="text" name="collection-name">
-        <button type="submit">Ajouter</button>
+    <input type="text" name="collection-name">
+    <button hx-post="{% url 'add-collection' %}"
+            hx-target="#collections"
+            hx-swap="beforeend"
+            type="submit">Ajouter
+    </button>
 
 
-    </form>
+</form>
+
+<script>
+    document.body.addEventListener("htmx:responseError", function (evt) {
+        alert(evt.detail.xhr.responseText);
+    })
+</script>
 
 </body>
 </html>
