@@ -1,5 +1,5 @@
  {% for task in tasks %}
 
-        <p>{{ task.description }}</p>
+        {% include 'tasks/task.html' with task=task %}
 
  {% endfor %}
