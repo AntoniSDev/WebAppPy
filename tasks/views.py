@@ -36,7 +36,14 @@ def add_task(request):
     description = escape(request.POST.get("task-description"))
     task = Task.objects.create(description=description, collection=collection)
 
-    return  render(request, 'tasks/task.html', context={"task": task})
+    return render(request, 'tasks/task.html', context={"task": task})
+
+
+def delete_task(request, task_pk):
+    task = get_object_or_404(Task, pk=task_pk)
+    task.delete()
+
+    return HttpResponse("")
 
 
 def get_tasks(request, collection_pk):
