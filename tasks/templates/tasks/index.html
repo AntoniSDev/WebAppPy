@@ -32,23 +32,22 @@
     <input type="text" name="task-description">
     <button hx-post="{% url 'add-task' %}"
             hx-target="#tasks"
-            hx-vals='js:{collection: getCollectionFromURL()}'
+            hx-vals='js:{"collection": getCollectionFromURL()}'
             hx-swap="beforeend"
             type="submit">
         Ajouter
     </button>
 </form>
 
-<div>
+
+<div id="tasks">
     {% include 'tasks/tasks.html' with tasks=tasks collection=collection %}
 </div>
-
 
 <script>
     document.body.addEventListener("htmx:responseError", function (evt) {
         alert(evt.detail.xhr.responseText);
     })
-
 
     function getCollectionFromURL() {
         let url = new URL(window.location.href);
